@@ -83,7 +83,7 @@ export const NEWS: NewsItem[] = [
     excerpt:
       'Turf availability has improved at three complexes, letting us move several backlogged fixtures into midweek slots.',
     body: [
-      'Additional evening allocations at Burnaby Lake, Newton and Town Centre give us roughly thirty extra slots between now and the end of March.',
+      'Additional evening allocations at the Okanagan complex, Rutland and Lake Country give us roughly thirty extra slots between now and the end of March.',
       'Postponed fixtures will be rescheduled oldest-first. Clubs affected will receive notice at least ten days ahead of any midweek date.',
       'Field status on match day is published live on the fields page and updated as closures come in.',
     ],
@@ -397,13 +397,13 @@ export const DOCUMENTS = [
 ]
 
 export const HONOURS = [
-  { season: '2024-25', premier: 'BB5 United A', imperial: 'Croatia SC A', div1: 'Rino’s Tigers A', goldenBoot: 'M. Ferreira — 27' },
-  { season: '2023-24', premier: 'BB5 United A', imperial: 'Coquitlam Metro-Ford A', div1: 'Pegasus FC A', goldenBoot: 'D. Alvarez — 24' },
-  { season: '2022-23', premier: 'BB5 United A', imperial: 'BB5 United A', div1: 'Club Inter EDC A', goldenBoot: 'A. Haddad — 22' },
-  { season: '2021-22', premier: 'Croatia SC A', imperial: 'Rino’s Tigers A', div1: 'Guildford FC A', goldenBoot: 'L. Nguyen — 25' },
-  { season: '2019-20', premier: 'Coquitlam Metro-Ford A', imperial: 'West Van FC A', div1: 'North Van FC A', goldenBoot: 'S. Petrovic — 21' },
-  { season: '2018-19', premier: 'Rino’s Tigers A', imperial: 'ICSF Columbus A', div1: 'Surrey United A', goldenBoot: 'K. Marino — 26' },
-  { season: '2017-18', premier: 'Croatia SC A', imperial: 'Croatia SC A', div1: 'Dunbar SC A', goldenBoot: 'R. Mendes — 23' },
+  { season: '2024-25', premier: 'Okanagan FC A', imperial: 'Rutland Rovers A', div1: 'Mission Creek SC A', goldenBoot: 'M. Ferreira — 27' },
+  { season: '2023-24', premier: 'Okanagan FC A', imperial: 'Glenmore Athletic A', div1: 'Knox Ridge United A', goldenBoot: 'D. Alvarez — 24' },
+  { season: '2022-23', premier: 'Okanagan FC A', imperial: 'Okanagan FC A', div1: 'Kettle Valley SC A', goldenBoot: 'A. Haddad — 22' },
+  { season: '2021-22', premier: 'Rutland Rovers A', imperial: 'Mission Creek SC A', div1: 'Pandosy Rangers A', goldenBoot: 'L. Nguyen — 25' },
+  { season: '2019-20', premier: 'Glenmore Athletic A', imperial: 'Westside Athletic A', div1: 'Lake Country FC A', goldenBoot: 'S. Petrovic — 21' },
+  { season: '2018-19', premier: 'Mission Creek SC A', imperial: 'Benvoulin SC A', div1: 'Shannon Lake United A', goldenBoot: 'K. Marino — 26' },
+  { season: '2017-18', premier: 'Rutland Rovers A', imperial: 'Rutland Rovers A', div1: 'Springfield United A', goldenBoot: 'R. Mendes — 23' },
 ]
 
 export const FAQ_GENERAL = [

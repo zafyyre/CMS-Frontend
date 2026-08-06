@@ -101,7 +101,7 @@ function Hero() {
               transition={{ duration: 0.6, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
               className="mt-6 max-w-xl text-[1.05rem] leading-relaxed text-muted"
             >
-              British Columbia&rsquo;s premier amateur adult soccer league. Fixtures, live scores, standings
+              A fictional amateur adult soccer league, built as a demo. Fixtures, live scores, standings
               and stats for {TEAMS.length} teams across {DIVISIONS.length} divisions — updated the moment the
               final whistle goes.
             </motion.p>
@@ -215,7 +215,7 @@ function LivePanel() {
 const ACTIONS = [
   { to: '/fixtures', icon: CalendarDays, title: 'Fixtures', copy: 'Kickoff times, fields and results by weekend' },
   { to: '/standings', icon: Trophy, title: 'Standings', copy: 'Live tables for every division' },
-  { to: '/teams', icon: Shield, title: 'Find a team', copy: `${CLUBS.length} clubs across the Lower Mainland` },
+  { to: '/teams', icon: Shield, title: 'Find a team', copy: `${CLUBS.length} sample clubs across the valley` },
   { to: '/register', icon: ClipboardList, title: 'Register', copy: 'Players, teams and new club applications' },
   { to: '/fields', icon: MapPin, title: 'Fields', copy: 'Directions, surfaces and closure status' },
   { to: '/stats', icon: Users, title: 'Statistics', copy: 'Golden boot, shutouts and discipline' },

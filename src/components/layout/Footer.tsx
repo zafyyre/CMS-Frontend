@@ -3,7 +3,7 @@ import { Facebook, Instagram, Mail, MapPin, Twitter } from 'lucide-react'
 import { Container } from '../ui'
 import { NAV } from './nav'
 import { MATCHES, TEAMS } from '@/data/engine'
-import { CLUBS, SEASON_ID, VENUES } from '@/data/league'
+import { CLUBS, LEAGUE_FOUNDED, LEAGUE_NAME, SEASON_ID, VENUES } from '@/data/league'
 
 const FOOTER_LINKS = [
   {
@@ -35,10 +35,12 @@ const FOOTER_LINKS = [
   },
 ]
 
+/* Placeholders only — this demo has no real social accounts behind it, so
+   these render as inert badges rather than links to somewhere real. */
 const SOCIALS = [
-  { label: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/vmslsoccer/' },
-  { label: 'X', icon: Twitter, href: 'https://x.com/vmslsoccer' },
-  { label: 'Facebook', icon: Facebook, href: 'https://www.facebook.com/' },
+  { label: 'Instagram', icon: Instagram },
+  { label: 'X', icon: Twitter },
+  { label: 'Facebook', icon: Facebook },
 ]
 
 export function Footer() {
@@ -62,41 +64,39 @@ export function Footer() {
                 </svg>
               </span>
               <div className="leading-tight">
-                <p className="font-display text-lg font-extrabold">Vancouver Metro Soccer League</p>
-                <p className="text-xs text-faint">Founded 1973 · {SEASON_ID} season</p>
+                <p className="font-display text-lg font-extrabold">{LEAGUE_NAME}</p>
+                <p className="text-xs text-faint">
+                  Est. {LEAGUE_FOUNDED} (fictional) · {SEASON_ID} season
+                </p>
               </div>
             </div>
 
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
-              British Columbia&rsquo;s premier amateur adult soccer league — five open divisions, an Under-21
-              competition and Masters soccer, played across the Lower Mainland every weekend.
+              A made-up amateur adult soccer league — five open divisions, an Under-21 competition and Masters
+              soccer, played across an imagined Okanagan valley every weekend.
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2">
               {SOCIALS.map((s) => (
-                <a
+                <span
                   key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={s.label}
-                  className="grid h-10 w-10 place-items-center rounded-xl border border-[var(--border)] bg-surface text-muted transition-all hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-accent"
+                  title={`${s.label} — placeholder, no account linked`}
+                  className="grid h-10 w-10 place-items-center rounded-xl border border-dashed border-[var(--border)] bg-surface text-faint opacity-60"
                 >
                   <s.icon size={17} />
-                </a>
+                </span>
               ))}
-              <a
-                href="mailto:info@vmslsoccer.com"
-                aria-label="Email the league"
-                className="grid h-10 w-10 place-items-center rounded-xl border border-[var(--border)] bg-surface text-muted transition-all hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-accent"
+              <span
+                title="Placeholder address — not a real mailbox"
+                className="grid h-10 w-10 place-items-center rounded-xl border border-dashed border-[var(--border)] bg-surface text-faint opacity-60"
               >
                 <Mail size={17} />
-              </a>
+              </span>
             </div>
 
             <p className="mt-5 flex items-start gap-2 text-sm text-faint">
               <MapPin size={15} className="mt-0.5 shrink-0" />
-              6501 Sprott Street, Burnaby, BC&nbsp;V5B 3B8
+              100 Example Sports Way, Kelowna, BC (sample address)
             </p>
           </div>
 
@@ -138,8 +138,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col gap-4 border-t border-[var(--border)] pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-faint">
-            © {new Date().getFullYear()} Vancouver Metro Soccer League. Affiliated with BC Soccer and Canada
-            Soccer.
+            {LEAGUE_NAME} — a fictional league. Not affiliated with any real organization.
           </p>
           <nav aria-label="Footer" className="flex flex-wrap gap-x-5 gap-y-2">
             {NAV.filter((n) => n.to).map((n) => (
@@ -150,11 +149,25 @@ export function Footer() {
           </nav>
         </div>
 
-        <p className="mt-6 rounded-xl border border-dashed border-[var(--border-strong)] px-4 py-3 text-xs leading-relaxed text-faint">
-          <strong className="font-semibold text-muted">Demonstration build.</strong> Fixtures, results, tables and
-          player statistics on this site are simulated from a seeded dataset anchored to a mid-January 2026
-          matchday, so the league always has a full season of history behind it and fixtures ahead of it.
-        </p>
+        <div className="mt-6 space-y-2 rounded-xl border border-dashed border-[var(--border-strong)] px-4 py-4 text-xs leading-relaxed text-faint">
+          <p>
+            <strong className="font-semibold text-muted">Not affiliated with anyone.</strong> This site is an
+            independent demo. It is not affiliated with, endorsed by, sponsored by, or connected to any real
+            soccer league, club, association, business or person. The {LEAGUE_NAME} does not exist — it was
+            invented for this project.
+          </p>
+          <p>
+            <strong className="font-semibold text-muted">Everything here is fake.</strong> Every club, team,
+            player, manager, fixture, result, statistic, standing, field, address, email and phone number is
+            randomly generated or made-up sample data. Nothing on this site describes real people, real places
+            or real events, and none of it should be relied on for anything.
+          </p>
+          <p>
+            <strong className="font-semibold text-muted">Built as a demo with Claude by me, for testing
+            purposes.</strong> It exists to try out frontend ideas — layout, motion, theming and a simulated
+            data layer — and for no other reason.
+          </p>
+        </div>
       </Container>
     </footer>
   )

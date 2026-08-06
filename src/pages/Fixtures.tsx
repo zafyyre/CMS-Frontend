@@ -23,7 +23,7 @@ export default function Fixtures() {
   const [division, setDivision] = useState(params.get('division') ?? 'all')
   const [club, setClub] = useState(params.get('club') ?? 'all')
   const [query, setQuery] = useState('')
-  const [view, setView] = useLocalStorage<View>('vmsl-fixtures-view', 'list')
+  const [view, setView] = useLocalStorage<View>('kmsl-fixtures-view', 'list')
   const [showFilters, setShowFilters] = useState(false)
 
   const debouncedQuery = useDebounced(query)

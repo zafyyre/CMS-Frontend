@@ -7,9 +7,9 @@
     <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)" />
     <meta
       name="description"
-      content="Vancouver Metro Soccer League — standings, fixtures, results, stats, cups and registration for BC's premier amateur adult soccer league."
+      content="Kelowna Metro Soccer League — a fictional demo site showing standings, fixtures, results, stats, cups and registration. Sample data only; not affiliated with any real organization."
     />
-    <title>VMSL — Vancouver Metro Soccer League</title>
+    <title>KMSL — Kelowna Metro Soccer League (Demo)</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,7 +20,7 @@
     <script>
       // Apply stored theme before first paint to avoid a flash.
       try {
-        const stored = localStorage.getItem('vmsl-theme')
+        const stored = localStorage.getItem('kmsl-theme')
         const dark = stored ? stored === 'dark' : true
         document.documentElement.classList.toggle('dark', dark)
         document.documentElement.style.colorScheme = dark ? 'dark' : 'light'

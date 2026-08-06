@@ -9,7 +9,7 @@ import { useScrollLock, useScrollY, useTheme } from '@/lib/hooks'
 
 function Wordmark() {
   return (
-    <Link to="/" className="group flex shrink-0 items-center gap-2.5" aria-label="VMSL home">
+    <Link to="/" className="group flex shrink-0 items-center gap-2.5" aria-label="KMSL home">
       <span className="relative grid h-9 w-9 place-items-center rounded-xl bg-[var(--accent)] text-[var(--accent-contrast)] transition-transform duration-300 group-hover:scale-105">
         <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" strokeWidth="2.4">
           <path d="M12 2.6 20 6v9c0 4.6-3.6 7.8-8 9.4C7.6 22.8 4 19.6 4 15V6z" strokeLinejoin="round" />
@@ -17,7 +17,7 @@ function Wordmark() {
         </svg>
       </span>
       <span className="flex flex-col leading-none">
-        <span className="font-display text-lg font-extrabold tracking-tight">VMSL</span>
+        <span className="font-display text-lg font-extrabold tracking-tight">KMSL</span>
         <span className="text-[0.6rem] font-semibold uppercase tracking-[0.15em] text-faint">
           Metro Soccer
         </span>

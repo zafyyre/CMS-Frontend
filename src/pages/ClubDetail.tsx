@@ -48,9 +48,8 @@ export default function ClubDetail() {
   }
 
   const venue = venueById.get(club.homeVenueId)
-  const mapsUrl = venue
-    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${venue.name}, ${venue.address}`)}`
-    : undefined
+  // No directions link: these venues and addresses are invented, so sending
+  // someone to a map search would only produce a misleading result.
 
   return (
     <>
@@ -157,12 +156,10 @@ export default function ClubDetail() {
                     <Badge>{venue.fields} fields</Badge>
                     {venue.lights && <Badge tone="warn">Floodlit</Badge>}
                   </div>
-                  {mapsUrl && (
-                    <Button href={mapsUrl} variant="outline" size="sm" className="mt-4 w-full">
-                      <Navigation size={14} />
-                      Get directions
-                    </Button>
-                  )}
+                  <p className="mt-4 flex items-center gap-1.5 text-[0.7rem] text-faint">
+                    <Navigation size={12} />
+                    Sample venue — not a real location
+                  </p>
                 </div>
               </div>
             )}

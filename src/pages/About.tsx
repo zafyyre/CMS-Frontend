@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Download, FileText, Mail, MapPin, Phone, Trophy, Users } from 'lucide-react'
-import { Badge, Button, Chip, Container, SectionHeading } from '@/components/ui'
+import { Badge, Chip, Container, SectionHeading } from '@/components/ui'
 import { BOARD, DOCUMENTS, HONOURS } from '@/data/content'
 import { MATCHES, TEAMS } from '@/data/engine'
-import { CLUBS, VENUES } from '@/data/league'
+import { CLUBS, LEAGUE_FOUNDED, LEAGUE_NAME, VENUES } from '@/data/league'
 import { cx, initials } from '@/lib/format'
 import { useCountUp, useInView } from '@/lib/hooks'
 
@@ -39,15 +39,15 @@ export default function About() {
         />
         <Container className="relative py-14 sm:py-20">
           <Badge tone="accent" className="mb-4">
-            Since 1973
+            Fictional league · est. {LEAGUE_FOUNDED}
           </Badge>
           <h1 className="max-w-3xl text-3xl leading-tight sm:text-4xl lg:text-[3.4rem]">
-            Fifty years of Saturday afternoons
+            A league that doesn&rsquo;t exist
           </h1>
           <p className="mt-5 max-w-2xl text-[1.05rem] leading-relaxed text-muted">
-            The Vancouver Metro Soccer League exists to develop, promote and safeguard adult soccer across
-            British Columbia&rsquo;s Lower Mainland — from the Premier Division down to Over-55s, and every
-            club, field and volunteer in between.
+            The {LEAGUE_NAME} is invented. This page describes how it would work if it were real — from the
+            Premier Division down to Over-55s — and exists purely to give the demo something coherent to
+            render. Nothing below refers to a real organization, person or place.
           </p>
         </Container>
       </div>
@@ -66,17 +66,16 @@ export default function About() {
             <SectionHeading eyebrow="What we do" title="Running the competition" />
             <div className="mt-5 space-y-4 text-[0.98rem] leading-relaxed text-muted">
               <p>
-                The league schedules and administers competition across ten divisions, appoints and develops
-                match officials, and maintains the discipline process that keeps the game fair.
+                In this imagined setup, the league schedules and administers competition across ten divisions,
+                appoints and develops match officials, and maintains a discipline process.
               </p>
               <p>
-                Everything is run by volunteers drawn from the playing membership. The board is elected annually
-                at the general meeting, and every club in good standing holds a vote.
+                Everything would be run by volunteers drawn from the playing membership, with a board elected
+                annually and a vote for every club in good standing.
               </p>
               <p>
-                We are a member of the British Columbia Soccer Association and, through it, Canada Soccer. That
-                affiliation is what makes fixtures sanctioned, players insured, and the pathway to provincial
-                competition open to clubs that earn it.
+                This league holds no affiliation with any association or governing body, because it is not a
+                real league. The directors listed below are invented characters, not people.
               </p>
             </div>
           </div>
@@ -220,11 +219,11 @@ export default function About() {
           <SectionHeading eyebrow="Get in touch" title="Contact the league" />
           <div className="mt-6 grid gap-3 sm:grid-cols-3">
             {[
-              { icon: Mail, label: 'General enquiries', value: 'info@vmslsoccer.com', href: 'mailto:info@vmslsoccer.com' },
-              { icon: Mail, label: 'Registration', value: 'registrar@vmslsoccer.com', href: 'mailto:registrar@vmslsoccer.com' },
-              { icon: Phone, label: 'Office', value: '(604) 555-0142', href: 'tel:+16045550142' },
+              { icon: Mail, label: 'General enquiries', value: 'info@example.com' },
+              { icon: Mail, label: 'Registration', value: 'registrar@example.com' },
+              { icon: Phone, label: 'Office', value: '(250) 555-0142' },
             ].map((c) => (
-              <a key={c.label} href={c.href} className="card card-hover flex items-center gap-4 p-5">
+              <div key={c.label} className="card flex items-center gap-4 p-5">
                 <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[var(--accent)]/12 text-accent">
                   <c.icon size={17} />
                 </span>
@@ -234,22 +233,20 @@ export default function About() {
                   </span>
                   <span className="block truncate text-sm font-semibold">{c.value}</span>
                 </span>
-              </a>
+              </div>
             ))}
           </div>
 
-          <div className="card mt-3 flex flex-wrap items-center justify-between gap-4 p-5">
+          <div className="card mt-3 p-5">
             <p className="flex items-start gap-2.5 text-sm text-muted">
               <MapPin size={16} className="mt-0.5 shrink-0 text-accent" />
-              6501 Sprott Street, Burnaby, British Columbia&nbsp;V5B 3B8
+              100 Example Sports Way, Kelowna, BC — a sample address
             </p>
-            <Button
-              href="https://www.google.com/maps/search/?api=1&query=6501%20Sprott%20Street%2C%20Burnaby%2C%20BC"
-              variant="outline"
-              size="sm"
-            >
-              Open in maps
-            </Button>
+            <p className="mt-3 text-xs leading-relaxed text-faint">
+              None of the above is a working contact. The addresses use the reserved{' '}
+              <code className="rounded bg-surface-2 px-1 py-0.5">example.com</code> domain and the number uses
+              the reserved 555 range, so nothing here reaches a real inbox, phone or building.
+            </p>
           </div>
         </div>
       </Container>

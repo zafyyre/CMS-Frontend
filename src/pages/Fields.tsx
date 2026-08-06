@@ -136,7 +136,7 @@ export default function Fields() {
       <SectionHeading
         eyebrow="Where we play"
         title="Fields"
-        description={`${VENUES.length} venues across the Lower Mainland. Tap any pin for directions and what's on next.`}
+        description={`${VENUES.length} made-up venues across the valley. Tap any pin to see what's on next.`}
       />
 
       <div className="mt-8">
@@ -179,9 +179,7 @@ export default function Fields() {
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((v, i) => {
           const next = upcomingByVenue.get(v.id) ?? []
-          const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-            `${v.name}, ${v.address}`,
-          )}`
+          // Venues are invented, so there is no directions link to offer.
           return (
             <motion.div
               key={v.id}
@@ -247,15 +245,10 @@ export default function Fields() {
                 )}
               </div>
 
-              <a
-                href={mapsUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center justify-center gap-1.5 border-t border-[var(--border)] bg-surface-2 py-2.5 text-xs font-semibold text-muted transition-colors hover:bg-surface-3 hover:text-accent"
-              >
+              <p className="flex items-center justify-center gap-1.5 border-t border-[var(--border)] bg-surface-2 py-2.5 text-xs font-semibold text-faint">
                 <Navigation size={13} />
-                Directions
-              </a>
+                Sample venue — not a real location
+              </p>
             </motion.div>
           )
         })}

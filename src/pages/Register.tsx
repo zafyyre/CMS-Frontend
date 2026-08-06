@@ -129,7 +129,7 @@ function PathSteps({ pathId }: { pathId: string }) {
           <p className="text-sm leading-relaxed text-muted">
             The registrar answers email within one business day during the registration window.
           </p>
-          <Button href="mailto:registrar@vmslsoccer.com" variant="outline" size="sm" className="mt-3 w-full">
+          <Button href="mailto:registrar@example.com" variant="outline" size="sm" className="mt-3 w-full">
             Email the registrar
           </Button>
         </div>

@@ -168,7 +168,7 @@ export function useTheme() {
       document.documentElement.classList.toggle('dark', next)
       document.documentElement.style.colorScheme = next ? 'dark' : 'light'
       try {
-        localStorage.setItem('vmsl-theme', next ? 'dark' : 'light')
+        localStorage.setItem('kmsl-theme', next ? 'dark' : 'light')
       } catch {
         /* ignore */
       }

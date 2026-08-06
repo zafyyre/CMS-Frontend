@@ -64,7 +64,7 @@ export default function Teams() {
       <SectionHeading
         eyebrow="Directory"
         title="Teams & clubs"
-        description={`${CLUBS.length} clubs field ${TEAMS.length} sides across the Lower Mainland. Find one near you.`}
+        description={`${CLUBS.length} sample clubs field ${TEAMS.length} sides across the valley. All fictional.`}
       />
 
       {/* Mode switch */}

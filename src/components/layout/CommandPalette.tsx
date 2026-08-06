@@ -74,7 +74,7 @@ function buildIndex(): Entry[] {
   ]
 }
 
-/** Subsequence match — "bb5 a" finds "BB5 United A". */
+/** Subsequence match — "rut rov" finds "Rutland Rovers A". */
 function score(query: string, text: string): number {
   const q = query.toLowerCase()
   const t = text.toLowerCase()

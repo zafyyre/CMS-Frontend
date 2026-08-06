@@ -81,9 +81,7 @@ export default function MatchDetail() {
 
   const goals = match.events.filter((e) => e.type === 'goal' || e.type === 'own-goal')
   const cards = match.events.filter((e) => e.type === 'yellow' || e.type === 'red')
-  const mapsUrl = venue
-    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${venue.name}, ${venue.address}`)}`
-    : undefined
+  // No directions link — venues are invented, so a map search would mislead.
 
   return (
     <>
@@ -306,12 +304,10 @@ export default function MatchDetail() {
                   {venue.lights && <Badge tone="warn">Floodlit</Badge>}
                   <Badge>{venue.fields} fields</Badge>
                 </div>
-                {mapsUrl && (
-                  <Button href={mapsUrl} variant="outline" size="sm" className="mt-4 w-full">
-                    <Navigation size={14} />
-                    Directions
-                  </Button>
-                )}
+                <p className="mt-4 flex items-center gap-1.5 text-[0.7rem] text-faint">
+                  <Navigation size={12} />
+                  Sample venue — not a real location
+                </p>
               </div>
             )}
 
