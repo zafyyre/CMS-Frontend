@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.log
+server/data/*.db
+server/data/*.db-*
+.DS_Store
+
+# Machine-local Claude Code permission state
+.claude/settings.local.json
