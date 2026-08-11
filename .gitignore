@@ -4,6 +4,7 @@ dist/
 server/data/*.db
 server/data/*.db-*
 .DS_Store
+.env
 
 # Machine-local Claude Code permission state
 .claude/settings.local.json
