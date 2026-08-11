@@ -7,22 +7,24 @@
   publish = "client/dist"
 
 [build.environment]
-  NODE_VERSION = "22"
+  NODE_VERSION = "24"
 
 # --- Redirect order matters: Netlify uses the FIRST matching rule. ---
 # The /api proxy must stay above the SPA fallback, or API calls would be
 # swallowed by index.html.
 
 # The frontend calls relative /api/* paths (in dev, Vite proxies these to the
-# Express server on :4000). In production that proxy doesn't exist, so point
-# /api/* at wherever the backend is hosted. Uncomment and set the host once
-# the API is deployed — no application code needs to change.
+# Express server on :4000). In production this rule forwards them to the API on
+# Render, so no application code has to change.
 #
-# [[redirects]]
-#   from = "/api/*"
-#   to = "https://YOUR-BACKEND-HOST/api/:splat"
-#   status = 200
-#   force = true
+# The host must match the Render service URL. `nmsl-league-api` is the service
+# name in render.yaml; if Render assigned a different name (e.g. because that
+# one was taken), update the host below to match.
+[[redirects]]
+  from = "/api/*"
+  to = "https://nmsl-league-api.onrender.com/api/:splat"
+  status = 200
+  force = true
 
 # SPA fallback: React Router owns routing, so any non-asset request must be
 # served index.html (otherwise deep links like /standings or /portal 404).

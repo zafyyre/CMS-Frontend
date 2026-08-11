@@ -12,12 +12,20 @@ if (isEmpty()) {
 }
 
 const app = express();
-app.use(cors());
+
+// Behind the Netlify /api proxy the browser never calls this host directly, so
+// CORS isn't involved on that path. CORS_ORIGIN (comma-separated) restricts
+// direct access; unset allows all, which suits local development.
+const corsOrigin = process.env.CORS_ORIGIN;
+app.use(cors(corsOrigin ? { origin: corsOrigin.split(',').map((s) => s.trim()) } : undefined));
 app.use(express.json());
 
-// Use a dedicated var so a harness-injected PORT (used by the Vite dev
-// server) can't collide with the API. The Vite proxy targets this port.
-const PORT = process.env.API_PORT || 4000;
+// Render (and most hosts) inject PORT. Locally we prefer API_PORT so a
+// harness-injected PORT — used by the Vite dev server — can't collide with the
+// API, since the Vite proxy targets port 4000.
+const PORT = process.env.API_PORT
+  || (process.env.NODE_ENV === 'production' ? process.env.PORT : null)
+  || 4000;
 
 /* ------------------------------------------------------------------ *
  * Query helpers

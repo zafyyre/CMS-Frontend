@@ -1,0 +1,50 @@
+# Render blueprint for the Express API.
+#
+# Deploy: Render dashboard > New > Blueprint > pick this repo. Render reads this
+# file and creates the service. The frontend stays on Netlify and reaches this
+# host through the /api/* proxy redirect in netlify.toml.
+
+services:
+  - type: web
+    name: nmsl-league-api
+    runtime: node
+    plan: free
+    # Only the API's dependencies — the client's build tooling isn't needed here.
+    buildCommand: npm install --workspace server --include-workspace-root
+    startCommand: node server/src/index.js
+    healthCheckPath: /api/health
+    envVars:
+      # node:sqlite is only available unflagged on Node 23.4+; pin to 24.
+      - key: NODE_VERSION
+        value: "24"
+      # Signals the server to bind Render's injected PORT.
+      - key: NODE_ENV
+        value: production
+      # Restrict direct browser access to the API. Requests coming through the
+      # Netlify proxy are server-side and unaffected by this. Set this to your
+      # Netlify domain in the Render dashboard, e.g. https://your-site.netlify.app
+      - key: CORS_ORIGIN
+        sync: false
+
+# ---------------------------------------------------------------------------
+# Data persistence
+#
+# Free instances have an EPHEMERAL filesystem: the SQLite file is discarded on
+# every restart, redeploy, and spin-down. The server detects an empty database
+# on boot and re-seeds itself, so the demo always works — but anything created
+# through the UI (registrations, uploaded documents, filed match reports) is
+# lost on restart.
+#
+# To keep data across restarts, move off the free plan and attach a disk —
+# replace `plan: free` above with `plan: starter`, then add:
+#
+#     envVars:
+#       - key: DATA_DIR
+#         value: /var/data
+#     disk:
+#       name: nmsl-data
+#       mountPath: /var/data
+#       sizeGB: 1
+#
+# DATA_DIR is already wired up in server/src/db.js, so no code changes needed.
+# ---------------------------------------------------------------------------
