@@ -1,0 +1,32 @@
+# Netlify build configuration.
+# Settings here take precedence over the site's UI build settings.
+
+[build]
+  # Root script builds the client workspace (outputs to client/dist).
+  command = "npm run build"
+  publish = "client/dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# --- Redirect order matters: Netlify uses the FIRST matching rule. ---
+# The /api proxy must stay above the SPA fallback, or API calls would be
+# swallowed by index.html.
+
+# The frontend calls relative /api/* paths (in dev, Vite proxies these to the
+# Express server on :4000). In production that proxy doesn't exist, so point
+# /api/* at wherever the backend is hosted. Uncomment and set the host once
+# the API is deployed — no application code needs to change.
+#
+# [[redirects]]
+#   from = "/api/*"
+#   to = "https://YOUR-BACKEND-HOST/api/:splat"
+#   status = 200
+#   force = true
+
+# SPA fallback: React Router owns routing, so any non-asset request must be
+# served index.html (otherwise deep links like /standings or /portal 404).
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
