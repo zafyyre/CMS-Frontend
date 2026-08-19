@@ -32,3 +32,20 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# --- Static asset caching -------------------------------------------------
+# Vite fingerprints these filenames (index-a1b2c3.js), so the content behind a
+# given URL never changes — a new build produces a new name. They can be held
+# forever, which makes repeat visits cost nothing.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# The HTML shell is the one file whose URL is stable across deploys. It must
+# stay uncached, or visitors keep booting the previous build's asset names
+# after a deploy.
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

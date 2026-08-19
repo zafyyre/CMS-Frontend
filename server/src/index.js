@@ -20,6 +20,45 @@ const corsOrigin = process.env.CORS_ORIGIN;
 app.use(cors(corsOrigin ? { origin: corsOrigin.split(',').map((s) => s.trim()) } : undefined));
 app.use(express.json());
 
+/* ------------------------------------------------------------------ *
+ * HTTP caching
+ *
+ * The API sits behind Netlify's /api proxy, and Netlify's edge only caches a
+ * proxied response if the origin says it may. Without these headers every
+ * visitor's first paint waits on a full round trip to Render — and on the
+ * free plan, on the container waking from spin-down.
+ *
+ * Only endpoints whose response is byte-identical for every caller are
+ * listed. Everything else — auth, /me, the role dashboards, all writes, and
+ * the health probe Render polls — falls through to `no-store`, so no
+ * personal or role-scoped payload can ever be held at a shared edge.
+ * ------------------------------------------------------------------ */
+const PUBLIC_GET_ROUTES = [
+  /^\/api\/summary$/,
+  /^\/api\/divisions(\/|$)/,
+  /^\/api\/teams(\/|$)/,
+  /^\/api\/schedule$/,
+  /^\/api\/weekly$/,
+  /^\/api\/fields$/,
+  /^\/api\/cups(\/|$)/,
+  /^\/api\/discipline$/,
+  /^\/api\/news(\/|$)/,
+];
+
+// Fresh for a minute, then the stale copy keeps being served for five more
+// while it refreshes in the background. That stale window is what hides a
+// cold start: returning visitors get bytes immediately even when the origin
+// is still booting. Match results therefore surface up to a minute late,
+// which is an acceptable trade for a league site.
+const PUBLIC_CACHE = 'public, max-age=60, stale-while-revalidate=300';
+
+app.use((req, res, next) => {
+  const cacheable = req.method === 'GET'
+    && PUBLIC_GET_ROUTES.some((re) => re.test(req.path));
+  res.set('Cache-Control', cacheable ? PUBLIC_CACHE : 'no-store');
+  next();
+});
+
 // Render (and most hosts) inject PORT. Locally we prefer API_PORT so a
 // harness-injected PORT — used by the Vite dev server — can't collide with the
 // API, since the Vite proxy targets port 4000.
