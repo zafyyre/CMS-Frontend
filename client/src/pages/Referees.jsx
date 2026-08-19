@@ -5,7 +5,9 @@ import { Spinner, ErrorBox, Crest } from '../components/ui.jsx';
 const gradeClass = { Provincial: 'green', Regional: 'blue', District: 'amber' };
 
 export default function Referees() {
-  const { data, loading, error } = useApi('/referees');
+  const { data, loading, error, waking } = useApi('/referees');
+  if (loading) return <Spinner waking={waking} />;
+  if (error) return <ErrorBox message={error} />;
 
   return (
     <div className="section-gap">

@@ -2,7 +2,9 @@ import { useApi } from '../api.js';
 import { Spinner, ErrorBox } from '../components/ui.jsx';
 
 export default function Fields() {
-  const { data, loading, error } = useApi('/fields');
+  const { data, loading, error, waking } = useApi('/fields');
+  if (loading) return <Spinner waking={waking} />;
+  if (error) return <ErrorBox message={error} />;
 
   return (
     <div className="section-gap">

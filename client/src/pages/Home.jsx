@@ -4,8 +4,8 @@ import { Spinner, ErrorBox, MatchRow, TeamInline, Crest } from '../components/ui
 import { fmtDate } from '../format.js';
 
 export default function Home() {
-  const { data, loading, error } = useApi('/summary');
-  if (loading) return <Spinner />;
+  const { data, loading, error, waking } = useApi('/summary');
+  if (loading) return <Spinner waking={waking} />;
   if (error) return <ErrorBox message={error} />;
   const { news, upcoming, results, premierTop, stats } = data;
   const [lead, ...rest] = news;

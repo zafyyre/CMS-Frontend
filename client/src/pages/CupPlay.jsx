@@ -8,7 +8,9 @@ export default function CupPlay() {
   const navigate = useNavigate();
   const { data: cups } = useApi('/cups');
   const active = slug || (cups && cups[0] && cups[0].slug);
-  const { data, loading, error } = useApi(active ? `/cups/${active}` : null, [active]);
+  const { data, loading, error, waking } = useApi(active ? `/cups/${active}` : null, [active]);
+  if (loading) return <Spinner waking={waking} />;
+  if (error) return <ErrorBox message={error} />;
 
   return (
     <div className="section-gap">

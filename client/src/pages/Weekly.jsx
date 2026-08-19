@@ -7,7 +7,9 @@ export default function Weekly() {
   const [offset, setOffset] = useState(0);
   const [division, setDivision] = useState('all');
   const { data: divisions } = useApi('/divisions');
-  const { data, loading, error } = useApi(`/weekly?offset=${offset}`, [offset]);
+  const { data, loading, error, waking } = useApi(`/weekly?offset=${offset}`, [offset]);
+  if (loading) return <Spinner waking={waking} />;
+  if (error) return <ErrorBox message={error} />;
 
   const rangeLabel = data
     ? `${fmtDateLong(data.weekStart)} – ${fmtDateLong(shiftDay(data.weekEnd, -1))}`

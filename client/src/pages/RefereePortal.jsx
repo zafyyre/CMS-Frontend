@@ -10,10 +10,10 @@ import { fmtDay, fmtTime, fmtDateLong } from '../format.js';
 export default function RefereeDashboard() {
   const { logout } = useAuth();
   const [tick, setTick] = useState(0);
-  const { data, loading, error } = useApi('/me/assignments', [tick]);
+  const { data, loading, error, waking } = useApi('/me/assignments', [tick]);
   const refresh = () => setTick((t) => t + 1);
 
-  if (loading) return <Spinner />;
+  if (loading) return <Spinner waking={waking} />;
   if (error) return <ErrorBox message={error} />;
 
   const { referee, stats, invitations, upcoming, past } = data;

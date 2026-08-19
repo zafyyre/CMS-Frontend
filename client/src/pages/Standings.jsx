@@ -41,8 +41,8 @@ export default function Standings() {
 }
 
 function TableView({ slug }) {
-  const { data, loading, error } = useApi(`/divisions/${slug}`, [slug]);
-  if (loading) return <Spinner />;
+  const { data, loading, error, waking } = useApi(`/divisions/${slug}`, [slug]);
+  if (loading) return <Spinner waking={waking} />;
   if (error) return <ErrorBox message={error} />;
   const { division, standings } = data;
   const n = standings.length;
@@ -94,7 +94,7 @@ function MatchesView({ slug }) {
   const { data: meta } = useApi(`/divisions/${slug}`, [slug]);
   const [round, setRound] = useState('all');
   const path = round === 'all' ? `/divisions/${slug}/matches` : `/divisions/${slug}/matches?round=${round}`;
-  const { data: matches, loading, error } = useApi(path, [slug, round]);
+  const { data: matches, loading, error, waking } = useApi(path, [slug, round]);
 
   const rounds = meta?.rounds || [];
 

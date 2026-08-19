@@ -40,8 +40,21 @@ export function FormRow({ form }) {
   );
 }
 
-export function Spinner() {
-  return <div className="spinner" aria-label="Loading" />;
+export function Spinner({ waking = false }) {
+  // `waking` is set once a request has already failed and is being retried,
+  // which on the free plan means the API container is booting. Saying so
+  // beats leaving the visitor staring at a spinner that looks stuck.
+  return (
+    <>
+      <div className="spinner" aria-label="Loading" />
+      {waking && (
+        <p className="empty">
+          Waking the server — it sleeps after 15 minutes idle, so this first
+          load can take up to a minute. This will retry on its own.
+        </p>
+      )}
+    </>
+  );
 }
 
 export function ErrorBox({ message }) {

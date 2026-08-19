@@ -12,7 +12,9 @@ const TABS = [
 export default function News() {
   const [cat, setCat] = useState('all');
   const path = cat === 'all' ? '/news' : `/news?category=${cat}`;
-  const { data, loading, error } = useApi(path, [cat]);
+  const { data, loading, error, waking } = useApi(path, [cat]);
+  if (loading) return <Spinner waking={waking} />;
+  if (error) return <ErrorBox message={error} />;
 
   return (
     <div className="section-gap">

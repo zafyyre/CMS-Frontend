@@ -10,7 +10,9 @@ const statusClass = { Active: 'red', 'Pending Hearing': 'amber', Served: 'green'
 export default function Discipline() {
   const [status, setStatus] = useState('All');
   const path = status === 'All' ? '/discipline' : `/discipline?status=${encodeURIComponent(status)}`;
-  const { data, loading, error } = useApi(path, [status]);
+  const { data, loading, error, waking } = useApi(path, [status]);
+  if (loading) return <Spinner waking={waking} />;
+  if (error) return <ErrorBox message={error} />;
 
   return (
     <div className="section-gap">

@@ -5,8 +5,8 @@ import { fmtDay, fmtTime } from '../format.js';
 
 export default function TeamDetail() {
   const { slug } = useParams();
-  const { data, loading, error } = useApi(`/teams/${slug}`, [slug]);
-  if (loading) return <Spinner />;
+  const { data, loading, error, waking } = useApi(`/teams/${slug}`, [slug]);
+  if (loading) return <Spinner waking={waking} />;
   if (error) return <ErrorBox message={error} />;
 
   const { team, position, matches } = data;

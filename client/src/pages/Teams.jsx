@@ -8,7 +8,9 @@ export default function Teams() {
   const q = params.get('q') || '';
   const [division, setDivision] = useState('all');
   const { data: divisions } = useApi('/divisions');
-  const { data: teams, loading, error } = useApi('/teams');
+  const { data: teams, loading, error, waking } = useApi('/teams');
+  if (loading) return <Spinner waking={waking} />;
+  if (error) return <ErrorBox message={error} />;
 
   const setQuery = (val) => {
     const next = new URLSearchParams(params);
