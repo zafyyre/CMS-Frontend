@@ -29,7 +29,7 @@ export default function Referees() {
         <div className="grid grid-3">
           {data.map((r) => (
             <div key={r.id} className="card card-pad" style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
-              <Crest name={r.name} color="#0f5132" size="lg" />
+              <Crest name={r.name} color="#0f4574" size="lg" />
               <div style={{ minWidth: 0, flex: 1 }}>
                 <div style={{ fontWeight: 700, fontSize: 15.5 }}>{r.name}</div>
                 <span className={`tag ${gradeClass[r.grade] || ''}`} style={{ marginTop: 4 }}>{r.grade}</span>

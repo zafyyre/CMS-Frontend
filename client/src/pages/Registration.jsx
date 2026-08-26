@@ -29,7 +29,7 @@ export default function Registration() {
           <ol className="list-reset" style={{ counterReset: 'step' }}>
             {STEPS.map(([title, body], i) => (
               <li key={i} style={{ display: 'flex', gap: 14, padding: '16px 20px', borderBottom: i < STEPS.length - 1 ? '1px solid var(--border)' : 'none' }}>
-                <span style={{ flex: 'none', width: 30, height: 30, borderRadius: '50%', background: 'var(--pitch-700)', color: '#fff', display: 'grid', placeItems: 'center', fontWeight: 800 }}>{i + 1}</span>
+                <span style={{ flex: 'none', width: 30, height: 30, borderRadius: '50%', background: 'var(--brand-700)', color: '#fff', display: 'grid', placeItems: 'center', fontWeight: 800 }}>{i + 1}</span>
                 <div>
                   <div style={{ fontWeight: 700 }}>{title}</div>
                   <div className="muted" style={{ fontSize: 14 }}>{body}</div>

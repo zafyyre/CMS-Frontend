@@ -1,28 +1,35 @@
 :root {
-  --pitch-900: #08301f;
-  --pitch-800: #0b3d2e;
-  --pitch-700: #0f5132;
-  --pitch-600: #14724a;
-  --pitch-500: #1a8a5a;
-  --accent: #c8f244;
-  --accent-ink: #14351a;
+  /* Brand ramp. Renamed from --brand-* when the identity moved off green:
+     "pitch" named the colour, not the role, so it stopped describing this. */
+  --brand-900: #071f3a;
+  --brand-800: #0b2f57;
+  --brand-700: #0f4574;
+  --brand-600: #14639e;
+  --brand-500: #1a7ac0;
+  --accent: #45d7f2;
+  --accent-ink: #06222e;
 
-  --ink: #16201b;
-  --muted: #5f6b64;
-  --faint: #8a958e;
-  --bg: #f3f6f4;
+  /* Neutrals carry a hint of the brand hue, so they were retinted too —
+     leaving them green-tinted against blue reads as a muddy mismatch. */
+  --ink: #151d24;
+  --muted: #5c6773;
+  --faint: #8792a0;
+  --bg: #f2f5f8;
   --surface: #ffffff;
-  --surface-2: #f7faf8;
-  --border: #e2e8e4;
-  --border-strong: #cdd8d1;
+  --surface-2: #f6f9fc;
+  --border: #e1e7ee;
+  --border-strong: #ccd6e0;
 
+  /* Deliberately unchanged: these encode meaning, not brand. A win badge
+     turning blue would read as neutral, and the status tags below rely on
+     the same green/amber/red vocabulary. */
   --win: #17924c;
   --draw: #b5852a;
   --loss: #d1493f;
 
-  --shadow-sm: 0 1px 2px rgba(12, 40, 28, 0.06);
-  --shadow: 0 6px 20px rgba(12, 40, 28, 0.08);
-  --shadow-lg: 0 18px 44px rgba(12, 40, 28, 0.14);
+  --shadow-sm: 0 1px 2px rgba(12, 28, 45, 0.06);
+  --shadow: 0 6px 20px rgba(12, 28, 45, 0.08);
+  --shadow-lg: 0 18px 44px rgba(12, 28, 45, 0.14);
   --radius: 14px;
   --radius-sm: 9px;
   --maxw: 1160px;
@@ -53,7 +60,7 @@ main { flex: 1; padding: 28px 0 56px; }
 
 /* ---------------- Header / nav ---------------- */
 .site-header {
-  background: linear-gradient(180deg, var(--pitch-800), var(--pitch-900));
+  background: linear-gradient(180deg, var(--brand-800), var(--brand-900));
   color: #eafff3;
   position: sticky;
   top: 0;
@@ -77,7 +84,7 @@ main { flex: 1; padding: 28px 0 56px; }
   flex: none;
 }
 .brand-text h1 { font-size: 20px; color: #fff; letter-spacing: -0.02em; }
-.brand-text span { font-size: 11.5px; color: #9fe6bf; text-transform: uppercase; letter-spacing: .16em; }
+.brand-text span { font-size: 11.5px; color: #9fd6f0; text-transform: uppercase; letter-spacing: .16em; }
 .header-spacer { flex: 1; }
 .header-search {
   display: flex; align-items: center; gap: 8px;
@@ -90,7 +97,7 @@ main { flex: 1; padding: 28px 0 56px; }
   background: none; border: none; outline: none; color: #fff;
   width: 150px; font-size: 13.5px;
 }
-.header-search input::placeholder { color: #a9d8bf; }
+.header-search input::placeholder { color: #a9cfe8; }
 
 .header-portal {
   display: inline-flex; align-items: center; gap: 6px;
@@ -119,7 +126,7 @@ main { flex: 1; padding: 28px 0 56px; }
 .main-nav a {
   display: block; padding: 12px 14px;
   font-size: 13px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
-  color: #cfeeda; border-bottom: 3px solid transparent;
+  color: #cfe7f7; border-bottom: 3px solid transparent;
   transition: background .15s, color .15s, border-color .15s;
 }
 .main-nav a:hover { background: rgba(255,255,255,.08); color: #fff; }
@@ -127,15 +134,15 @@ main { flex: 1; padding: 28px 0 56px; }
 
 /* ---------------- Footer ---------------- */
 .site-footer {
-  background: var(--pitch-900); color: #bfe6cf;
+  background: var(--brand-900); color: #bfdff5;
   padding: 34px 0; margin-top: auto; font-size: 14px;
 }
 .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 28px; }
 .site-footer h4 { color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; }
-.site-footer a { color: #bfe6cf; }
+.site-footer a { color: #bfdff5; }
 .site-footer a:hover { color: #fff; }
 .site-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.footer-bottom { border-top: 1px solid rgba(255,255,255,.12); margin-top: 26px; padding-top: 18px; color: #86bfa0; font-size: 12.5px; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.12); margin-top: 26px; padding-top: 18px; color: #86aec9; font-size: 12.5px; }
 
 /* ---------------- Buttons & pills ---------------- */
 .btn {
@@ -144,9 +151,9 @@ main { flex: 1; padding: 28px 0 56px; }
   background: var(--surface); color: var(--ink); font-weight: 600; font-size: 14px;
   cursor: pointer; transition: all .15s; text-decoration: none;
 }
-.btn:hover { border-color: var(--pitch-500); color: var(--pitch-700); }
-.btn-primary { background: var(--pitch-700); color: #fff; border-color: var(--pitch-700); }
-.btn-primary:hover { background: var(--pitch-600); color: #fff; }
+.btn:hover { border-color: var(--brand-500); color: var(--brand-700); }
+.btn-primary { background: var(--brand-700); color: #fff; border-color: var(--brand-700); }
+.btn-primary:hover { background: var(--brand-600); color: #fff; }
 .btn-accent { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 .btn-sm { padding: 7px 12px; font-size: 13px; }
 
@@ -156,8 +163,8 @@ main { flex: 1; padding: 28px 0 56px; }
   background: var(--surface); color: var(--muted); font-size: 13px; font-weight: 600;
   cursor: pointer; transition: all .15s; white-space: nowrap;
 }
-.chip:hover { border-color: var(--pitch-500); color: var(--pitch-700); }
-.chip.active { background: var(--pitch-700); border-color: var(--pitch-700); color: #fff; }
+.chip:hover { border-color: var(--brand-500); color: var(--brand-700); }
+.chip.active { background: var(--brand-700); border-color: var(--brand-700); color: #fff; }
 
 select.input, input.input {
   padding: 9px 12px; border-radius: 10px; border: 1px solid var(--border-strong);
@@ -184,7 +191,7 @@ select.input, input.input {
 .page-head p { color: var(--muted); margin: 8px 0 0; max-width: 70ch; }
 .eyebrow {
   display: inline-block; text-transform: uppercase; letter-spacing: .14em;
-  font-size: 12px; font-weight: 700; color: var(--pitch-600);
+  font-size: 12px; font-weight: 700; color: var(--brand-600);
 }
 
 /* ---------------- Team badge ---------------- */
@@ -196,7 +203,7 @@ select.input, input.input {
 .crest.lg { width: 56px; height: 56px; border-radius: 12px; font-size: 18px; }
 .team-inline { display: inline-flex; align-items: center; gap: 10px; min-width: 0; }
 .team-inline .name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-a.team-inline:hover .name { color: var(--pitch-700); }
+a.team-inline:hover .name { color: var(--brand-700); }
 
 /* ---------------- Form pills ---------------- */
 .form-row { display: inline-flex; gap: 4px; }
@@ -223,7 +230,7 @@ table.tbl .l { text-align: left; }
 table.tbl tbody tr:hover { background: var(--surface-2); }
 .rank { font-weight: 800; color: var(--faint); width: 26px; }
 .pts { font-weight: 800; color: var(--ink); }
-.zone-promote { box-shadow: inset 3px 0 0 var(--pitch-500); }
+.zone-promote { box-shadow: inset 3px 0 0 var(--brand-500); }
 .zone-releg { box-shadow: inset 3px 0 0 var(--loss); }
 
 /* ---------------- Match rows ---------------- */
@@ -256,7 +263,7 @@ table.tbl tbody tr:hover { background: var(--surface-2); }
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
   padding: 18px; box-shadow: var(--shadow-sm);
 }
-.stat .n { font-size: 30px; font-weight: 800; letter-spacing: -.02em; color: var(--pitch-700); }
+.stat .n { font-size: 30px; font-weight: 800; letter-spacing: -.02em; color: var(--brand-700); }
 .stat .k { font-size: 12.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top: 2px; }
 
 /* ---------------- Badges ---------------- */
@@ -273,7 +280,7 @@ table.tbl tbody tr:hover { background: var(--surface-2); }
 /* ---------------- Hero ---------------- */
 .hero {
   position: relative; overflow: hidden; border-radius: 20px;
-  background: radial-gradient(120% 140% at 100% 0%, var(--pitch-600), var(--pitch-900));
+  background: radial-gradient(120% 140% at 100% 0%, var(--brand-600), var(--brand-900));
   color: #eafff3; padding: 40px; box-shadow: var(--shadow);
 }
 .hero::after {
@@ -283,7 +290,7 @@ table.tbl tbody tr:hover { background: var(--surface-2); }
 }
 .hero .eyebrow { color: var(--accent); }
 .hero h2 { font-size: clamp(26px, 4vw, 40px); color: #fff; margin: 12px 0 10px; max-width: 18ch; }
-.hero p { color: #c8efd8; max-width: 52ch; margin: 0 0 22px; }
+.hero p { color: #c8e6f7; max-width: 52ch; margin: 0 0 22px; }
 .hero .actions { display: flex; gap: 10px; flex-wrap: wrap; position: relative; z-index: 1; }
 
 /* ---------------- Misc ---------------- */
@@ -291,7 +298,7 @@ table.tbl tbody tr:hover { background: var(--surface-2); }
 .center { text-align: center; }
 .spinner {
   width: 30px; height: 30px; border-radius: 50%;
-  border: 3px solid var(--border); border-top-color: var(--pitch-500);
+  border: 3px solid var(--border); border-top-color: var(--brand-500);
   animation: spin .8s linear infinite; margin: 40px auto;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -299,7 +306,7 @@ table.tbl tbody tr:hover { background: var(--surface-2); }
 .error-box { background: #fbe7e5; border: 1px solid #f2cfca; color: #9a352d; padding: 14px 16px; border-radius: 12px; }
 .divider { height: 1px; background: var(--border); margin: 18px 0; }
 .list-reset { list-style: none; margin: 0; padding: 0; }
-.linklike { color: var(--pitch-700); font-weight: 600; }
+.linklike { color: var(--brand-700); font-weight: 600; }
 .linklike:hover { text-decoration: underline; }
 
 /* ---------------- Responsive ---------------- */
