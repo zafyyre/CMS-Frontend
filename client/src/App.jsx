@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Layout from './components/Layout.jsx';
+import ErrorBoundary from './components/ErrorBoundary.jsx';
 import Home from './pages/Home.jsx';
 import Weekly from './pages/Weekly.jsx';
 import Standings from './pages/Standings.jsx';
@@ -28,27 +29,32 @@ export default function App() {
   return (
     <Layout>
       <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/weekly" element={<Weekly />} />
-        <Route path="/standings" element={<Standings />} />
-        <Route path="/standings/:slug" element={<Standings />} />
-        <Route path="/teams" element={<Teams />} />
-        <Route path="/teams/:slug" element={<TeamDetail />} />
-        <Route path="/cups" element={<CupPlay />} />
-        <Route path="/cups/:slug" element={<CupPlay />} />
-        <Route path="/discipline" element={<Discipline />} />
-        <Route path="/fields" element={<Fields />} />
-        <Route path="/referees" element={<Referees />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/portal" element={<Portal />} />
-        <Route path="/referee" element={<Navigate to="/portal" replace />} />
-        <Route path="/registration" element={<Registration />} />
-        <Route path="/news" element={<News />} />
-        <Route path="/about" element={<About />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      {/* Inner boundary: a page crash replaces only the content, so the header
+          and nav survive and the visitor can click straight out of it. The
+          outer boundary in main.jsx still covers Layout itself. */}
+      <ErrorBoundary>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/weekly" element={<Weekly />} />
+          <Route path="/standings" element={<Standings />} />
+          <Route path="/standings/:slug" element={<Standings />} />
+          <Route path="/teams" element={<Teams />} />
+          <Route path="/teams/:slug" element={<TeamDetail />} />
+          <Route path="/cups" element={<CupPlay />} />
+          <Route path="/cups/:slug" element={<CupPlay />} />
+          <Route path="/discipline" element={<Discipline />} />
+          <Route path="/fields" element={<Fields />} />
+          <Route path="/referees" element={<Referees />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/portal" element={<Portal />} />
+          <Route path="/referee" element={<Navigate to="/portal" replace />} />
+          <Route path="/registration" element={<Registration />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </ErrorBoundary>
     </Layout>
   );
 }

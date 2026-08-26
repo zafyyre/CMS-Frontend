@@ -8,12 +8,23 @@ import { staticGet, staticPost } from './staticApi.js';
 const LIVE = import.meta.env.VITE_API_MODE === 'live';
 
 const TOKEN_KEY = 'nmsl.token';
-let authToken = localStorage.getItem(TOKEN_KEY) || null;
+
+// Storage can be unavailable or throw outright — private windows, blocked
+// cookies, embedded webviews. This runs at module scope, so an unguarded read
+// would fail before React ever mounts and leave a blank page with no error.
+// Guarded, the worst case is simply not remembering a session.
+const storage = {
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch { /* unavailable */ } },
+  remove(k) { try { localStorage.removeItem(k); } catch { /* unavailable */ } },
+};
+
+let authToken = storage.get(TOKEN_KEY) || null;
 
 export function setAuthToken(token) {
   authToken = token || null;
-  if (token) localStorage.setItem(TOKEN_KEY, token);
-  else localStorage.removeItem(TOKEN_KEY);
+  if (token) storage.set(TOKEN_KEY, token);
+  else storage.remove(TOKEN_KEY);
 }
 export function getAuthToken() {
   return authToken;
