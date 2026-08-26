@@ -12,6 +12,7 @@
     "dev:server": "npm run dev --workspace server",
     "dev:client": "npm run dev --workspace client",
     "seed": "npm run seed --workspace server",
+    "bake": "node scripts/bake-static.mjs",
     "build": "npm run build --workspace client",
     "start": "npm run start --workspace server"
   },

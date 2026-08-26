@@ -9,7 +9,9 @@ import RefereeDashboard from './RefereePortal.jsx';
 export default function Portal() {
   const { user, loading } = useAuth();
 
-  if (loading) return <Spinner waking={waking} />;
+  // `loading` here is the auth check, not a data fetch — there is no cold
+  // start to explain, so this Spinner takes no `waking` prop.
+  if (loading) return <Spinner />;
   if (!user) return <Navigate to="/login" replace />;
 
   switch (user.role) {

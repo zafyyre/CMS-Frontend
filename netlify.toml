@@ -9,22 +9,9 @@
 [build.environment]
   NODE_VERSION = "24"
 
-# --- Redirect order matters: Netlify uses the FIRST matching rule. ---
-# The /api proxy must stay above the SPA fallback, or API calls would be
-# swallowed by index.html.
-
-# The frontend calls relative /api/* paths (in dev, Vite proxies these to the
-# Express server on :4000). In production this rule forwards them to the API on
-# Render, so no application code has to change.
-#
-# The host must match the Render service URL. `nmsl-league-api` is the service
-# name in render.yaml; if Render assigned a different name (e.g. because that
-# one was taken), update the host below to match.
-[[redirects]]
-  from = "/api/*"
-  to = "https://nmsl-league-api.onrender.com/api/:splat"
-  status = 200
-  force = true
+# The site is fully static: every API response was baked into client/public/data
+# by scripts/bake-static.mjs, so there is no backend to proxy to. The previous
+# /api/* proxy to Render has been removed along with the service.
 
 # SPA fallback: React Router owns routing, so any non-asset request must be
 # served index.html (otherwise deep links like /standings or /portal 404).
@@ -49,3 +36,12 @@
   for = "/index.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
+
+# Baked API snapshots. Unlike /assets/* these filenames are stable across
+# deploys, so they can't be immutable — a short TTL keeps repeat navigation
+# instant while letting a re-bake reach visitors quickly. Netlify purges its
+# own CDN on deploy; this only governs the browser cache.
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300, stale-while-revalidate=86400"
