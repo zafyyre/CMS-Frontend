@@ -6,6 +6,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Northlake Metro Soccer League — a demonstration league site: standings, schedules, teams, cups and member portals." />
     <title>Northlake Metro Soccer League</title>
+
+    <!--
+      Blank-page watchdog.
+
+      React's error boundary only catches errors thrown while rendering. It
+      cannot catch a bundle that fails to load or parse, a module that throws
+      on import, or anything that stops React mounting at all — those leave an
+      empty #root and a silent white page with nothing to report.
+
+      This runs before the bundle, records every error from the very start, and
+      shows what it caught if #root is ever empty when it shouldn't be. It is
+      deliberately dependency-free and inline so it works even when the bundle
+      and stylesheet never arrive.
+    -->
+    <script>
+      (function () {
+        var errors = [];
+        var shown = false;
+
+        function record(text) {
+          errors.push(String(text).slice(0, 400));
+        }
+
+        window.addEventListener('error', function (e) {
+          if (e && e.target && e.target !== window && e.target.src) {
+            record('Failed to load resource: ' + e.target.src);
+          } else if (e) {
+            record((e.message || 'Script error')
+              + (e.filename ? ' @ ' + e.filename + ':' + (e.lineno || '?') : ''));
+          }
+        }, true);
+
+        window.addEventListener('unhandledrejection', function (e) {
+          var r = e && e.reason;
+          record('Unhandled rejection: ' + ((r && r.message) || r));
+        });
+
+        function details() {
+          return [
+            'URL: ' + location.href,
+            'Browser: ' + navigator.userAgent,
+            'Screen: ' + window.innerWidth + 'x' + window.innerHeight,
+            'Time: ' + new Date().toISOString(),
+            '',
+            errors.length ? errors.join('\n') : 'No JavaScript error was captured.',
+          ].join('\n');
+        }
+
+        function render(root) {
+          shown = true;
+          var text = details();
+          root.innerHTML = ''
+            + '<div style="font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;'
+            + 'max-width:640px;margin:40px auto;padding:24px;border:1px solid #d8dee5;'
+            + 'border-radius:12px;background:#fff;color:#14202b;line-height:1.6">'
+            + '<h2 style="margin:0 0 8px;font-size:20px">This page did not load</h2>'
+            + '<p style="margin:0 0 16px;color:#5a6675">The site failed to start in this browser. '
+            + 'The details below say why — please send them along so it can be fixed.</p>'
+            + '<pre id="wd-details" style="background:#f3f5f8;border:1px solid #e2e7ec;border-radius:8px;'
+            + 'padding:12px;font-size:12px;white-space:pre-wrap;word-break:break-word;'
+            + 'max-height:260px;overflow:auto;margin:0 0 16px"></pre>'
+            + '<button id="wd-reload" style="font:inherit;font-weight:600;padding:9px 16px;margin-right:8px;'
+            + 'border-radius:8px;border:0;background:#0b3d2e;color:#fff;cursor:pointer">Reload</button>'
+            + '<button id="wd-copy" style="font:inherit;font-weight:600;padding:9px 16px;'
+            + 'border-radius:8px;border:1px solid #d8dee5;background:#fff;color:#14202b;cursor:pointer">'
+            + 'Copy details</button>'
+            + '</div>';
+          // textContent, never innerHTML — the error string is untrusted input.
+          document.getElementById('wd-details').textContent = text;
+          document.getElementById('wd-reload').onclick = function () { location.reload(); };
+          document.getElementById('wd-copy').onclick = function () {
+            var btn = this;
+            try {
+              navigator.clipboard.writeText(text).then(function () { btn.textContent = 'Copied'; });
+            } catch (err) {
+              var r = document.createRange();
+              r.selectNode(document.getElementById('wd-details'));
+              window.getSelection().removeAllRanges();
+              window.getSelection().addRange(r);
+            }
+          };
+        }
+
+        // Poll rather than check once: a blank screen can appear after a
+        // navigation, long past load. Two consecutive empty reads avoid firing
+        // during the brief gap while React is mounting.
+        var emptyStreak = 0;
+        function check() {
+          if (shown) return;
+          var root = document.getElementById('root');
+          if (!root) return;
+          if (root.children.length === 0) {
+            emptyStreak += 1;
+            if (emptyStreak >= 2) render(root);
+          } else {
+            emptyStreak = 0;
+          }
+        }
+
+        setTimeout(function () { setInterval(check, 1500); }, 3500);
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
