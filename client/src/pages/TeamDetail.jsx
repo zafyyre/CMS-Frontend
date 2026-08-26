@@ -74,7 +74,7 @@ export default function TeamDetail() {
 function MiniStat({ n, k }) {
   return (
     <div style={{ textAlign: 'center', padding: '6px 0' }}>
-      <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--brand-700)' }}>{n}</div>
+      <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--pitch-700)' }}>{n}</div>
       <div className="muted" style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: '.06em' }}>{k}</div>
     </div>
   );

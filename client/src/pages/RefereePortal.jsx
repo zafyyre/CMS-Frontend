@@ -21,8 +21,8 @@ export default function RefereeDashboard() {
   return (
     <div className="section-gap">
       <div className="card" style={{ overflow: 'hidden' }}>
-        <div style={{ display: 'flex', gap: 16, alignItems: 'center', padding: 22, background: 'linear-gradient(100deg, rgba(15,69,116,.10), transparent)' }}>
-          <Crest name={referee.name} color="#0f4574" size="lg" />
+        <div style={{ display: 'flex', gap: 16, alignItems: 'center', padding: 22, background: 'linear-gradient(100deg, rgba(15,81,50,.10), transparent)' }}>
+          <Crest name={referee.name} color="#0f5132" size="lg" />
           <div style={{ flex: 1, minWidth: 0 }}>
             <span className="eyebrow">Referee Portal</span>
             <h2 style={{ fontSize: 24, margin: '2px 0' }}>{referee.name}</h2>
@@ -81,7 +81,7 @@ export default function RefereeDashboard() {
 function MiniStat({ n, k }) {
   return (
     <div style={{ textAlign: 'center', padding: '18px 0' }}>
-      <div style={{ fontSize: 26, fontWeight: 800, color: 'var(--brand-700)' }}>{n}</div>
+      <div style={{ fontSize: 26, fontWeight: 800, color: 'var(--pitch-700)' }}>{n}</div>
       <div className="muted" style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: '.06em' }}>{k}</div>
     </div>
   );
@@ -225,7 +225,7 @@ function ReportForm({ assignmentId, match, onDone }) {
 
   return (
     <div style={{ marginTop: 14, padding: 16, background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: 12 }}>
-      <h4 style={{ fontSize: 14, textTransform: 'uppercase', letterSpacing: '.06em', color: 'var(--brand-700)', marginBottom: 12 }}>Match Report</h4>
+      <h4 style={{ fontSize: 14, textTransform: 'uppercase', letterSpacing: '.06em', color: 'var(--pitch-700)', marginBottom: 12 }}>Match Report</h4>
 
       <div style={{ display: 'flex', gap: 12, alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
         <div style={{ textAlign: 'center' }}>

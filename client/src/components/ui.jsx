@@ -3,7 +3,7 @@ import { initials, fmtDay, fmtTime } from '../format.js';
 
 export function Crest({ name, color, size }) {
   return (
-    <span className={`crest${size === 'lg' ? ' lg' : ''}`} style={{ background: color || '#0b2f57' }}>
+    <span className={`crest${size === 'lg' ? ' lg' : ''}`} style={{ background: color || '#0b3d2e' }}>
       {initials(name)}
     </span>
   );

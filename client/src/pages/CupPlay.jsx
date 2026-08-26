@@ -39,7 +39,7 @@ export default function CupPlay() {
             <div style={{ display: 'flex', gap: 18, minWidth: 'min-content', paddingBottom: 8 }}>
               {data.rounds.map((rd) => (
                 <div key={rd.name} style={{ flex: '1 0 280px', minWidth: 280 }}>
-                  <div style={{ fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.06em', fontSize: 12.5, color: 'var(--brand-700)', marginBottom: 10 }}>
+                  <div style={{ fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.06em', fontSize: 12.5, color: 'var(--pitch-700)', marginBottom: 10 }}>
                     {rd.name}
                   </div>
                   <div className="section-gap" style={{ display: 'grid', gap: 12 }}>
@@ -59,7 +59,7 @@ function Side({ side, winner }) {
   if (side.label) {
     return (
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, opacity: 0.7 }}>
-        <span className="crest" style={{ background: '#c3c9d0' }}>?</span>
+        <span className="crest" style={{ background: '#c3ccc6' }}>?</span>
         <span style={{ fontStyle: 'italic', color: 'var(--muted)' }}>{side.label}</span>
       </div>
     );

@@ -78,8 +78,8 @@ export default function CoachDashboard() {
 export function PortalHeader({ eyebrow, title, subtitle, color, user, onLogout }) {
   return (
     <div className="card" style={{ overflow: 'hidden' }}>
-      <div style={{ display: 'flex', gap: 16, alignItems: 'center', padding: 22, background: 'linear-gradient(100deg, rgba(15,69,116,.10), transparent)' }}>
-        <Crest name={title} color={color || '#0f4574'} size="lg" />
+      <div style={{ display: 'flex', gap: 16, alignItems: 'center', padding: 22, background: 'linear-gradient(100deg, rgba(15,81,50,.10), transparent)' }}>
+        <Crest name={title} color={color || '#0f5132'} size="lg" />
         <div style={{ flex: 1, minWidth: 0 }}>
           <span className="eyebrow">{eyebrow}</span>
           <h2 style={{ fontSize: 24, margin: '2px 0' }}>{title}</h2>
