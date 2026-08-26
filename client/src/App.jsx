@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import Layout from './components/Layout.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import Home from './pages/Home.jsx';
@@ -21,7 +21,9 @@ import NotFound from './pages/NotFound.jsx';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
-  useEffect(() => window.scrollTo(0, 0), [pathname]);
+  // useLayoutEffect, not useEffect: this runs before the browser paints, so a
+  // route change can never show a frame at the previous scroll offset.
+  useLayoutEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return null;
 }
 

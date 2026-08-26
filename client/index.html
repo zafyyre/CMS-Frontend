@@ -43,21 +43,36 @@
           record('Unhandled rejection: ' + ((r && r.message) || r));
         });
 
-        function details() {
+        function details(mode) {
+          var root = document.getElementById('root');
+          var sheets = -1;
+          try { sheets = document.styleSheets.length; } catch (e) { sheets = -1; }
           return [
+            'Mode: ' + (mode === 'blank' ? 'rendered, but nothing visible' : '#root empty'),
             'URL: ' + location.href,
             'Browser: ' + navigator.userAgent,
-            'Screen: ' + window.innerWidth + 'x' + window.innerHeight,
+            'Viewport: ' + window.innerWidth + 'x' + window.innerHeight,
+            'Scroll: ' + Math.round(window.scrollY) + ' of ' + document.documentElement.scrollHeight,
+            'Root children: ' + (root ? root.children.length : 'no #root'),
+            'Stylesheets: ' + sheets,
             'Time: ' + new Date().toISOString(),
             '',
             errors.length ? errors.join('\n') : 'No JavaScript error was captured.',
           ].join('\n');
         }
 
-        function render(root) {
+        function render(root, mode) {
           shown = true;
-          var text = details();
-          root.innerHTML = ''
+          var text = details(mode);
+          // In 'blank' mode React did render, so overlay the panel rather than
+          // wiping a tree that may be perfectly intact underneath.
+          var host = root;
+          if (mode === 'blank') {
+            host = document.createElement('div');
+            host.style.cssText = 'position:fixed;inset:0;z-index:2147483647;background:#fff;overflow:auto';
+            document.body.appendChild(host);
+          }
+          host.innerHTML = ''
             + '<div style="font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;'
             + 'max-width:640px;margin:40px auto;padding:24px;border:1px solid #d8dee5;'
             + 'border-radius:12px;background:#fff;color:#14202b;line-height:1.6">'
@@ -89,19 +104,40 @@
           };
         }
 
+        // An empty #root is only one way to get a white page. React can render
+        // perfectly well and still paint nothing visible — a collapsed layout,
+        // a stylesheet that never arrived, or scroll landing past the content.
+        // Probing the viewport catches that; inspecting #root alone cannot.
+        function viewportBlank() {
+          var w = window.innerWidth, h = window.innerHeight;
+          var pts = [[w / 2, h / 2], [w / 2, h * 0.25], [w / 2, h * 0.75],
+                     [w * 0.25, h / 2], [w * 0.75, h / 2]];
+          // #root counts as scaffolding, not content: it is hit-testable even
+          // when everything inside it is hidden or collapsed, so leaving it out
+          // of this list would make every blank page look occupied.
+          var root = document.getElementById('root');
+          for (var i = 0; i < pts.length; i++) {
+            var el = document.elementFromPoint(pts[i][0], pts[i][1]);
+            if (el && el !== document.documentElement && el !== document.body && el !== root) return false;
+          }
+          return true;
+        }
+
         // Poll rather than check once: a blank screen can appear after a
-        // navigation, long past load. Two consecutive empty reads avoid firing
+        // navigation, long past load. Two consecutive bad reads avoid firing
         // during the brief gap while React is mounting.
-        var emptyStreak = 0;
+        var badStreak = 0;
         function check() {
           if (shown) return;
           var root = document.getElementById('root');
           if (!root) return;
-          if (root.children.length === 0) {
-            emptyStreak += 1;
-            if (emptyStreak >= 2) render(root);
+          var empty = root.children.length === 0;
+          var blank = !empty && viewportBlank();
+          if (empty || blank) {
+            badStreak += 1;
+            if (badStreak >= 2) render(root, empty ? 'empty' : 'blank');
           } else {
-            emptyStreak = 0;
+            badStreak = 0;
           }
         }
 
