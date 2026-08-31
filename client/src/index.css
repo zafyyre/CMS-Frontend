@@ -133,8 +133,13 @@ main { flex: 1; padding: 28px 0 56px; }
 }
 .main-nav ul::-webkit-scrollbar { display: none; }
 .main-nav a {
-  display: block; padding: 12px 12px; white-space: nowrap;
-  font-size: 13px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase;
+  display: block; white-space: nowrap;
+  /* Fluid, not stepped: these scale continuously between the menu breakpoint
+     and the max width, so dragging the window has nothing to jump. Solved so
+     the tight end coincides with 1024px and the roomy end with 1160px. */
+  padding: 12px clamp(9px, 2.222vw - 13.78px, 12px);
+  font-size: clamp(12.5px, 0.37vw + 8.7px, 13px);
+  font-weight: 600; letter-spacing: .025em; text-transform: uppercase;
   color: #cfeeda; border-bottom: 3px solid transparent;
   transition: background .15s, color .15s, border-color .15s;
 }
@@ -319,22 +324,39 @@ table.tbl tbody tr:hover { background: var(--surface-2); }
 .linklike:hover { text-decoration: underline; }
 
 /* ---------------- Responsive ---------------- */
-/* Below the max width the nav has less room than the 1030px it needs at full
-   density, so tighten its rhythm. Measured: 11 items need 1030px roomy and
-   924px compact, against an available width of viewport minus two gutters. */
-@media (max-width: 1159px) {
-  .main-nav a { padding: 12px 9px; font-size: 12.5px; letter-spacing: .02em; }
-}
-
-/* 924px of nav against a 56px gutter runs out at about 980px of viewport, so
-   the menu takes over here with margin to spare. Everything is either fully
-   visible or behind the button — never scrolled out of sight. */
+/* The row still clears its container by ~37px at the narrowest inline width,
+   because the fluid metrics above shrink in step with the space available.
+   Below this the menu takes over; nothing is ever scrolled out of sight. */
 @media (max-width: 1024px) {
   .nav-toggle { display: block; }
-  .main-nav { display: none; }
-  .main-nav.open { display: block; }
+  /* Collapsed via max-height rather than display, so opening and closing can
+     animate. visibility is delayed to the end of the collapse so the links
+     leave the tab order and the accessibility tree once hidden. */
+  .main-nav {
+    display: block;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    border-top-color: transparent;
+    transition: max-height .24s ease, opacity .18s ease,
+                border-top-color .24s ease, visibility 0s linear .24s;
+  }
+  .main-nav.open {
+    max-height: 75vh;
+    opacity: 1;
+    visibility: visible;
+    overflow-y: auto;
+    border-top-color: rgba(255,255,255,.1);
+    transition: max-height .24s ease, opacity .18s ease,
+                border-top-color .24s ease, visibility 0s;
+  }
   .main-nav ul { flex-direction: column; flex-wrap: nowrap; overflow-x: visible; }
   .main-nav a { padding: 13px 4px; font-size: 13px; letter-spacing: .04em; border-bottom: 1px solid rgba(255,255,255,.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main-nav, .main-nav.open { transition: none; }
 }
 @media (max-width: 900px) {
   .header-search input { width: 110px; }
