@@ -319,11 +319,22 @@ table.tbl tbody tr:hover { background: var(--surface-2); }
 .linklike:hover { text-decoration: underline; }
 
 /* ---------------- Responsive ---------------- */
-/* Laptop widths: trim the nav's horizontal rhythm so all eleven items fit on
-   one row without scrolling. Below this the row scrolls, which is still a
-   fixed-height header rather than a wrapped one. */
-@media (max-width: 1080px) {
+/* Below the max width the nav has less room than the 1030px it needs at full
+   density, so tighten its rhythm. Measured: 11 items need 1030px roomy and
+   924px compact, against an available width of viewport minus two gutters. */
+@media (max-width: 1159px) {
   .main-nav a { padding: 12px 9px; font-size: 12.5px; letter-spacing: .02em; }
+}
+
+/* 924px of nav against a 56px gutter runs out at about 980px of viewport, so
+   the menu takes over here with margin to spare. Everything is either fully
+   visible or behind the button — never scrolled out of sight. */
+@media (max-width: 1024px) {
+  .nav-toggle { display: block; }
+  .main-nav { display: none; }
+  .main-nav.open { display: block; }
+  .main-nav ul { flex-direction: column; flex-wrap: nowrap; overflow-x: visible; }
+  .main-nav a { padding: 13px 4px; font-size: 13px; letter-spacing: .04em; border-bottom: 1px solid rgba(255,255,255,.08); }
 }
 @media (max-width: 900px) {
   .header-search input { width: 110px; }
@@ -333,11 +344,6 @@ table.tbl tbody tr:hover { background: var(--surface-2); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 720px) {
-  .nav-toggle { display: block; }
-  .main-nav { display: none; }
-  .main-nav.open { display: block; }
-  .main-nav ul { flex-direction: column; flex-wrap: nowrap; overflow-x: visible; }
-  .main-nav a { padding: 13px 4px; border-bottom: 1px solid rgba(255,255,255,.08); }
   .header-search { display: none; }
   .header-portal, .header-auth { display: none; }
   .nav-auth { display: block; }
