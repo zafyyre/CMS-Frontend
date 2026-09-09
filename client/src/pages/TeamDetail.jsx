@@ -88,16 +88,14 @@ function FixtureLine({ m, team }) {
   const opp = opponent(m, team);
   const isHome = m.home.slug === team.slug;
   return (
-    <li style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', borderBottom: '1px solid var(--border)' }}>
-      <div style={{ width: 74, fontSize: 12.5 }}>
-        <strong style={{ display: 'block' }}>{fmtDay(m.kickoff)}</strong>
+    <li className="fixture-line">
+      <div className="when">
+        <strong>{fmtDay(m.kickoff)}</strong>
         <span className="muted">{fmtTime(m.kickoff)}</span>
       </div>
       <span className="tag">{isHome ? 'H' : 'A'}</span>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <TeamInline team={opp} />
-      </div>
-      <span className="muted" style={{ fontSize: 12 }}>{m.field ? m.field.name : 'TBD'}</span>
+      <div className="who"><TeamInline team={opp} /></div>
+      <span className="where">{m.field ? m.field.name : 'TBD'}</span>
     </li>
   );
 }
@@ -109,16 +107,14 @@ function ResultLine({ m, team }) {
   const ga = isHome ? m.away.score : m.home.score;
   const cls = m.result === 'W' ? 'green' : m.result === 'L' ? 'red' : 'amber';
   return (
-    <li style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', borderBottom: '1px solid var(--border)' }}>
-      <div style={{ width: 74, fontSize: 12.5 }}>
-        <strong style={{ display: 'block' }}>{fmtDay(m.kickoff)}</strong>
+    <li className="fixture-line">
+      <div className="when">
+        <strong>{fmtDay(m.kickoff)}</strong>
         <span className="muted">{isHome ? 'Home' : 'Away'}</span>
       </div>
       <span className={`tag ${cls}`} style={{ fontWeight: 800 }}>{m.result}</span>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <TeamInline team={opp} />
-      </div>
-      <span style={{ fontWeight: 800 }}>{gf}–{ga}</span>
+      <div className="who"><TeamInline team={opp} /></div>
+      <span className="outcome">{gf}–{ga}</span>
     </li>
   );
 }
