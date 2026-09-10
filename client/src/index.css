@@ -192,10 +192,13 @@ select.input, input.input {
 }
 .card-pad { padding: 20px; }
 .card-head {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px 12px;
+  /* Wraps so a title and its trailing badges or form pills can never force
+     the card wider than the screen; the extras drop beneath instead. */
+  flex-wrap: wrap;
   padding: 16px 20px; border-bottom: 1px solid var(--border);
 }
-.card-head h3 { font-size: 16px; }
+.card-head h3 { font-size: 16px; min-width: 0; }
 .card-head .eyebrow { font-size: 12px; }
 
 /* ---------------- Page header ---------------- */
@@ -216,7 +219,7 @@ select.input, input.input {
 }
 .crest.lg { width: 56px; height: 56px; border-radius: 12px; font-size: 18px; }
 .team-inline { display: inline-flex; align-items: center; gap: 10px; min-width: 0; }
-.team-inline .name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.team-inline .name { font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 a.team-inline:hover .name { color: var(--pitch-700); }
 
 /* ---------------- Form pills ---------------- */
@@ -267,7 +270,12 @@ table.tbl tbody tr:hover { background: var(--surface-2); }
 .fixture-line:last-child { border-bottom: none; }
 .fixture-line .when { flex: none; width: 74px; font-size: 12.5px; }
 .fixture-line .when strong { display: block; }
-.fixture-line .who { flex: 1 1 auto; min-width: 0; }
+/* The cell has to constrain its content, not merely shrink itself.
+   .team-inline is inline-flex, so inside a plain block it sized to its text
+   and spilled over the score beside it, and the name's ellipsis never
+   engaged. As a flex container, the cell makes the link a shrinkable item. */
+.fixture-line .who { flex: 1 1 auto; min-width: 0; display: flex; }
+.fixture-line .who .team-inline { min-width: 0; max-width: 100%; }
 .fixture-line .where {
   flex: 0 1 auto; min-width: 0;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
@@ -281,6 +289,41 @@ table.tbl tbody tr:hover { background: var(--surface-2); }
   .fixture-line .where { display: none; }
   .fixture-line { gap: 10px; padding: 12px 14px; }
   .fixture-line .when { width: 68px; font-size: 12px; }
+}
+
+/* Team page headline numbers. They used the shared .grid-4 utility, which
+   collapses to a single column under 720px — so four short figures were
+   stacked down the full height of a phone screen. Their own grid keeps them
+   four across where there is room and a compact 2x2 block where there isn't. */
+.team-stats {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--border); padding: 14px 8px;
+}
+.mini-stat { text-align: center; padding: 8px 4px; min-width: 0; }
+.mini-stat .n { font-size: 24px; font-weight: 800; line-height: 1.15; color: var(--pitch-700); }
+.mini-stat .k {
+  margin-top: 3px; font-size: 11.5px; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .06em;
+}
+@media (max-width: 520px) {
+  .team-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 0; }
+  .mini-stat { padding: 14px 6px; }
+  .mini-stat:nth-child(odd) { border-right: 1px solid var(--border); }
+  .mini-stat:nth-child(-n + 2) { border-bottom: 1px solid var(--border); }
+  .mini-stat .n { font-size: 22px; }
+}
+
+/* Team page header. Its layout was inline styles, which no media query can
+   reach, so on a phone the 28px title broke as "Ashford United / A". */
+.team-hero { display: flex; gap: 18px; align-items: center; padding: 24px; }
+.team-hero-text { flex: 1; min-width: 0; }
+.team-hero h2 { font-size: 28px; margin: 4px 0; overflow-wrap: break-word; }
+.team-hero-meta { font-size: 14px; }
+@media (max-width: 520px) {
+  .team-hero { gap: 14px; padding: 18px; }
+  .team-hero .crest.lg { width: 48px; height: 48px; font-size: 16px; }
+  .team-hero h2 { font-size: 22px; }
+  .team-hero-meta { font-size: 13px; }
 }
 .match:hover { background: var(--surface-2); }
 .match .when { font-size: 12.5px; color: var(--muted); line-height: 1.35; }

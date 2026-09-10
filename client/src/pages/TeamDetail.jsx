@@ -21,12 +21,12 @@ export default function TeamDetail() {
       </div>
 
       <section className="card" style={{ overflow: 'hidden' }}>
-        <div style={{ display: 'flex', gap: 18, alignItems: 'center', padding: 24, background: `linear-gradient(100deg, ${team.color}14, transparent)` }}>
+        <div className="team-hero" style={{ background: `linear-gradient(100deg, ${team.color}14, transparent)` }}>
           <Crest name={team.name} color={team.color} size="lg" />
-          <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="team-hero-text">
             <span className="eyebrow">{team.division_name}</span>
-            <h2 style={{ fontSize: 28, margin: '4px 0' }}>{team.name}</h2>
-            <div className="muted" style={{ fontSize: 14 }}>
+            <h2>{team.name}</h2>
+            <div className="muted team-hero-meta">
               {team.club && <>Club: {team.club} · </>}
               Coach: {team.coach || 'TBA'}
               {team.field_name && <> · Home: {team.field_name}</>}
@@ -34,7 +34,7 @@ export default function TeamDetail() {
           </div>
         </div>
         {position && (
-          <div className="grid grid-4" style={{ padding: 20, gap: 0, borderTop: '1px solid var(--border)' }}>
+          <div className="team-stats">
             <MiniStat n={`#${position.rank}`} k="Position" />
             <MiniStat n={position.pts} k="Points" />
             <MiniStat n={`${position.w}-${position.d}-${position.l}`} k="W–D–L" />
@@ -73,9 +73,9 @@ export default function TeamDetail() {
 
 function MiniStat({ n, k }) {
   return (
-    <div style={{ textAlign: 'center', padding: '6px 0' }}>
-      <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--pitch-700)' }}>{n}</div>
-      <div className="muted" style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: '.06em' }}>{k}</div>
+    <div className="mini-stat">
+      <div className="n">{n}</div>
+      <div className="k">{k}</div>
     </div>
   );
 }
