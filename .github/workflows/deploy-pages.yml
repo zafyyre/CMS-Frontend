@@ -1,0 +1,61 @@
+name: Deploy to GitHub Pages
+
+# The site is fully static — every API response is baked into client/public/data —
+# so it builds once and publishes to GitHub Pages on every push to main.
+# This replaces Netlify, whose Free plan allows roughly two production deploys
+# a month, which is why pushes stopped reaching the live site.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deploy at a time, and never cancelled halfway through, so the newest push
+# is always the one left live.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      # GitHub Pages has no rewrite rules, so a deep link such as
+      # /teams/ashford-united-a has no file to serve. Publishing the app shell
+      # as 404.html makes Pages hand every unknown path to the SPA, which then
+      # renders the right route from the URL.
+      - name: Add SPA fallback
+        run: cp client/dist/index.html client/dist/404.html
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: client/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v5
