@@ -404,36 +404,103 @@ table.tbl tbody tr:hover { background: var(--surface-2); }
 /* The row still clears its container by ~37px at the narrowest inline width,
    because the fluid metrics above shrink in step with the space available.
    Below this the menu takes over; nothing is ever scrolled out of sight. */
+/* Only exists below the menu breakpoint, where it sits behind the open menu. */
+.nav-backdrop { display: none; }
+
 @media (max-width: 1024px) {
-  .nav-toggle { display: block; }
-  /* Collapsed via max-height rather than display, so opening and closing can
-     animate. visibility is delayed to the end of the collapse so the links
-     leave the tab order and the accessibility tree once hidden. */
+  .nav-toggle {
+    display: grid; place-items: center;
+    width: 42px; height: 42px; padding: 0; font-size: 20px;
+  }
+
+  /* The open menu is a panel laid over the page. It used to expand inside the
+     header, capped at 75vh, so on a phone the last items were cut off with the
+     page showing straight underneath. The panel now sits just below the header,
+     is capped to exactly the screen space left (--header-h is measured in
+     Layout.jsx), and only scrolls on a screen too short for every item.
+     Hidden via opacity and visibility so it can animate; visibility switches
+     last on close, taking the links out of the tab order once they're gone. */
   .main-nav {
-    display: block;
-    overflow: hidden;
-    max-height: 0;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--pitch-900);
+    border-top: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 0 0 18px 18px;
+    box-shadow: 0 24px 48px -16px rgba(0, 0, 0, .5);
+    max-height: calc(100vh - var(--header-h, 76px));
+    max-height: calc(100dvh - var(--header-h, 76px));
+    overflow-y: auto;
+    overscroll-behavior: contain;
     opacity: 0;
     visibility: hidden;
-    border-top-color: transparent;
-    transition: max-height .24s ease, opacity .18s ease,
-                border-top-color .24s ease, visibility 0s linear .24s;
+    transform: translateY(-6px);
+    transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s;
   }
   .main-nav.open {
-    max-height: 75vh;
     opacity: 1;
     visibility: visible;
-    overflow-y: auto;
-    border-top-color: rgba(255,255,255,.1);
-    transition: max-height .24s ease, opacity .18s ease,
-                border-top-color .24s ease, visibility 0s;
+    transform: none;
+    transition: opacity .2s ease, transform .2s ease, visibility 0s;
   }
-  .main-nav ul { flex-direction: column; flex-wrap: nowrap; overflow-x: visible; }
-  .main-nav a { padding: 13px 4px; font-size: 13px; letter-spacing: .04em; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .main-nav .container { padding-block: 10px 16px; }
+
+  /* One column on a phone. A desktop window that is merely narrow gets two or
+     three, so the panel never turns into rows stretched across 900px. */
+  .main-nav ul {
+    display: grid; gap: 4px; overflow: visible;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr));
+  }
+  .main-nav a {
+    display: flex; align-items: center;
+    min-height: 48px; padding: 0 14px; border-radius: 12px; border-bottom: 0;
+    font-size: 15px; font-weight: 600; letter-spacing: 0; text-transform: none;
+    white-space: normal; color: #d6f1e0;
+  }
+  .main-nav a:hover { background: rgba(255, 255, 255, .07); color: #fff; }
+  .main-nav a.active {
+    color: #fff;
+    background: rgba(200, 242, 68, .12);
+    box-shadow: inset 3px 0 0 var(--accent);
+  }
+
+  /* Account links (phones only, once the header's own buttons are hidden) sit
+     apart from the page links as full-width buttons. */
+  .main-nav .nav-auth { grid-column: 1 / -1; }
+  .main-nav li:not(.nav-auth) + .nav-auth {
+    margin-top: 8px; padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, .08);
+  }
+  .main-nav .nav-auth a { justify-content: center; font-weight: 700; }
+  .main-nav li:not(.nav-auth) + .nav-auth a {
+    background: var(--accent); color: var(--accent-ink); box-shadow: none;
+  }
+  .main-nav .nav-auth + .nav-auth a { border: 1px solid rgba(255, 255, 255, .18); }
+
+  /* Dims the page behind the open menu. It sits beneath the header (z-index
+     50), so the header and menu stay usable, while a tap on the page lands
+     here instead of on whatever is underneath. Layout.jsx closes the menu on
+     any tap outside it, this backdrop and the header bar alike. */
+  .nav-backdrop {
+    display: block;
+    position: fixed; inset: 0; z-index: 40;
+    background: rgba(2, 16, 10, .5);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .2s ease, visibility 0s linear .2s;
+  }
+  .nav-backdrop.open {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .2s ease, visibility 0s;
+  }
+
+  /* The page behind shouldn't scroll while the menu covers it. */
+  html.nav-open { overflow: hidden; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .main-nav, .main-nav.open { transition: none; }
+  .main-nav, .main-nav.open, .nav-backdrop, .nav-backdrop.open { transition: none; }
 }
 @media (max-width: 900px) {
   .header-search input { width: 110px; }
