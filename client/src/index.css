@@ -413,11 +413,12 @@ table.tbl tbody tr:hover { background: var(--surface-2); }
     width: 42px; height: 42px; padding: 0; font-size: 20px;
   }
 
-  /* The open menu is a panel laid over the page. It used to expand inside the
-     header, capped at 75vh, so on a phone the last items were cut off with the
-     page showing straight underneath. The panel now sits just below the header,
-     is capped to exactly the screen space left (--header-h is measured in
-     Layout.jsx), and only scrolls on a screen too short for every item.
+  /* The open menu is a dropdown panel laid over the page. It sits just below
+     the header (--header-h is measured in Layout.jsx) and stays shorter than
+     the screen, so the page keeps showing behind it and the menu reads as a
+     panel rather than as a new page. Two columns on a phone are what keep all
+     eleven links inside that height; the 75vh cap is only a backstop for a
+     short screen or large text, and the panel scrolls just in that case.
      Hidden via opacity and visibility so it can animate; visibility switches
      last on close, taking the links out of the tab order once they're gone. */
   .main-nav {
@@ -426,8 +427,8 @@ table.tbl tbody tr:hover { background: var(--surface-2); }
     border-top: 1px solid rgba(255, 255, 255, .08);
     border-radius: 0 0 18px 18px;
     box-shadow: 0 24px 48px -16px rgba(0, 0, 0, .5);
-    max-height: calc(100vh - var(--header-h, 76px));
-    max-height: calc(100dvh - var(--header-h, 76px));
+    max-height: min(75vh, calc(100vh - var(--header-h, 76px)));
+    max-height: min(75dvh, calc(100dvh - var(--header-h, 76px)));
     overflow-y: auto;
     overscroll-behavior: contain;
     opacity: 0;
@@ -443,8 +444,9 @@ table.tbl tbody tr:hover { background: var(--surface-2); }
   }
   .main-nav .container { padding-block: 10px 16px; }
 
-  /* One column on a phone. A desktop window that is merely narrow gets two or
-     three, so the panel never turns into rows stretched across 900px. */
+  /* Phones get two columns, set in the 720px block. A window that is merely
+     narrow fits more, so the panel never turns into rows stretched across
+     900px. */
   .main-nav ul {
     display: grid; gap: 4px; overflow: visible;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr));
@@ -513,6 +515,10 @@ table.tbl tbody tr:hover { background: var(--surface-2); }
   .header-search { display: none; }
   .header-portal, .header-auth { display: none; }
   .nav-auth { display: block; }
+  /* Two columns, so all eleven links and the account buttons fit in a panel
+     that leaves the page visible behind it. In one column the menu was as tall
+     as the screen, which read as a separate page rather than a menu. */
+  .main-nav ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .grid-2, .grid-3, .grid-4 { grid-template-columns: minmax(0, 1fr); }
   .hero { padding: 26px; }
   .match { grid-template-columns: 74px minmax(0, 1fr) auto minmax(0, 1fr); gap: 8px; }
